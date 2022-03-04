@@ -27,17 +27,37 @@ import (
 	"k8s.io/apimachinery/pkg/types"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
-	"github.com/crossplane-contrib/provider-jet-template/apis/v1alpha1"
+	"github.com/crossplane-contrib/provider-jet-vault/apis/v1alpha1"
 )
 
 const (
-	keyUsername = "username"
-	keyPassword = "password"
-	keyHost     = "host"
+	keyVaultAddr          = "address"
+	keyToken              = "token"
+	keyTokenName          = "token_name"
+	keyCaCertFile         = "ca_cert_file"
+	keyCaCertDir          = "ca_cert_dir"
+	keyAuthLogin          = "auth_login"
+	keyClientAuth         = "client_auth"
+	keySkipTlsVerify      = "skip_tls_verify"
+	keySkipChildToken     = "skip_child_token"
+	keyMaxLeaseTtlSeconds = "max_lease_ttl_seconds"
+	keyMaxRetries         = "max_retries"
+	keyMaxRetriesCcc      = "max_retries_ccc"
+	keyNamespace          = "namespace"
+	keyHeaders            = "headers"
 
-	// Template credentials environment variable names
-	envUsername = "HASHICUPS_USERNAME"
-	envPassword = "HASHICUPS_PASSWORD"
+	// Vault credentials environment variable names
+	envVaultAddr          = "VAULT_ADDR"
+	envToken              = "VAULT_TOKEN"
+	envTokenName          = "VAULT_TOKEN_NAME"
+	envCaCertFile         = "VAULT_CACERT"
+	envCaCertDir          = "VAULT_CAPATH"
+	envSkipTlsVerify      = "VAULT_SKIP_VERIFY"
+	envSkipChildToken     = "TERRAFORM_VAULT_SKIP_CHILD_TOKEN"
+	envMaxLeaseTtlSeconds = "TERRAFORM_VAULT_MAX_TTL"
+	envMaxRetries         = "VAULT_MAX_RETRIES"
+	envMaxRetriesCcc      = "VAULT_MAX_RETRIES_CCC"
+	envNamespace          = "VAULT_NAMESPACE"
 )
 
 const (
@@ -48,7 +68,7 @@ const (
 	errGetProviderConfig    = "cannot get referenced ProviderConfig"
 	errTrackUsage           = "cannot track ProviderConfig usage"
 	errExtractCredentials   = "cannot extract credentials"
-	errUnmarshalCredentials = "cannot unmarshal template credentials as JSON"
+	errUnmarshalCredentials = "cannot unmarshal vault credentials as JSON"
 )
 
 // TerraformSetupBuilder builds Terraform a terraform.SetupFn function which
@@ -81,19 +101,20 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 		if err != nil {
 			return ps, errors.Wrap(err, errExtractCredentials)
 		}
-		templateCreds := map[string]string{}
-		if err := json.Unmarshal(data, &templateCreds); err != nil {
+		vaultCreds := map[string]string{}
+		if err := json.Unmarshal(data, &vaultCreds); err != nil {
 			return ps, errors.Wrap(err, errUnmarshalCredentials)
 		}
 
 		// set provider configuration
 		ps.Configuration = map[string]interface{}{
-			"host": templateCreds[keyHost],
+			"address": vaultCreds[keyVaultAddr],
+			"token":   vaultCreds[keyToken],
 		}
 		// set environment variables for sensitive provider configuration
 		ps.Env = []string{
-			fmt.Sprintf(fmtEnvVar, envUsername, templateCreds[keyUsername]),
-			fmt.Sprintf(fmtEnvVar, envPassword, templateCreds[keyPassword]),
+			fmt.Sprintf(fmtEnvVar, envVaultAddr, vaultCreds[keyVaultAddr]),
+			fmt.Sprintf(fmtEnvVar, envToken, vaultCreds[keyToken]),
 		}
 		return ps, nil
 	}

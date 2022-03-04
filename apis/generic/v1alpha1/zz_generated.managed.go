@@ -19,58 +19,58 @@ package v1alpha1
 
 import xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 
-// GetCondition of this Resource.
-func (mg *Resource) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+// GetCondition of this Secret.
+func (mg *Secret) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
-// GetDeletionPolicy of this Resource.
-func (mg *Resource) GetDeletionPolicy() xpv1.DeletionPolicy {
+// GetDeletionPolicy of this Secret.
+func (mg *Secret) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
-// GetProviderConfigReference of this Resource.
-func (mg *Resource) GetProviderConfigReference() *xpv1.Reference {
+// GetProviderConfigReference of this Secret.
+func (mg *Secret) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 /*
-GetProviderReference of this Resource.
+GetProviderReference of this Secret.
 Deprecated: Use GetProviderConfigReference.
 */
-func (mg *Resource) GetProviderReference() *xpv1.Reference {
+func (mg *Secret) GetProviderReference() *xpv1.Reference {
 	return mg.Spec.ProviderReference
 }
 
-// GetWriteConnectionSecretToReference of this Resource.
-func (mg *Resource) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+// GetWriteConnectionSecretToReference of this Secret.
+func (mg *Secret) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
-// SetConditions of this Resource.
-func (mg *Resource) SetConditions(c ...xpv1.Condition) {
+// SetConditions of this Secret.
+func (mg *Secret) SetConditions(c ...xpv1.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
-// SetDeletionPolicy of this Resource.
-func (mg *Resource) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+// SetDeletionPolicy of this Secret.
+func (mg *Secret) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
-// SetProviderConfigReference of this Resource.
-func (mg *Resource) SetProviderConfigReference(r *xpv1.Reference) {
+// SetProviderConfigReference of this Secret.
+func (mg *Secret) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 /*
-SetProviderReference of this Resource.
+SetProviderReference of this Secret.
 Deprecated: Use SetProviderConfigReference.
 */
-func (mg *Resource) SetProviderReference(r *xpv1.Reference) {
+func (mg *Secret) SetProviderReference(r *xpv1.Reference) {
 	mg.Spec.ProviderReference = r
 }
 
-// SetWriteConnectionSecretToReference of this Resource.
-func (mg *Resource) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+// SetWriteConnectionSecretToReference of this Secret.
+func (mg *Secret) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }

@@ -25,62 +25,74 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type ResourceObservation struct {
+type SecretObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
-type ResourceParameters struct {
+type SecretParameters struct {
 
-	// A map of arbitrary strings that, when changed, will force the null resource to be replaced, re-running any associated provisioners.
+	// JSON-encoded secret data to write.
+	// +kubebuilder:validation:Required
+	DataJSONSecretRef v1.SecretKeySelector `json:"dataJsonSecretRef" tf:"-"`
+
+	// Only applicable for kv-v2 stores. If set, permanently deletes all versions for the specified key.
 	// +kubebuilder:validation:Optional
-	Triggers map[string]*string `json:"triggers,omitempty" tf:"triggers,omitempty"`
+	DeleteAllVersions *bool `json:"deleteAllVersions,omitempty" tf:"delete_all_versions,omitempty"`
+
+	// Don't attempt to read the token from Vault if true; drift won't be detected.
+	// +kubebuilder:validation:Optional
+	DisableRead *bool `json:"disableRead,omitempty" tf:"disable_read,omitempty"`
+
+	// Full path where the generic secret will be written.
+	// +kubebuilder:validation:Required
+	Path *string `json:"path" tf:"path,omitempty"`
 }
 
-// ResourceSpec defines the desired state of Resource
-type ResourceSpec struct {
+// SecretSpec defines the desired state of Secret
+type SecretSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     ResourceParameters `json:"forProvider"`
+	ForProvider     SecretParameters `json:"forProvider"`
 }
 
-// ResourceStatus defines the observed state of Resource.
-type ResourceStatus struct {
+// SecretStatus defines the observed state of Secret.
+type SecretStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        ResourceObservation `json:"atProvider,omitempty"`
+	AtProvider        SecretObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// Resource is the Schema for the Resources API
+// Secret is the Schema for the Secrets API
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:subresource:status
-// +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,templatejet}
-type Resource struct {
+// +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,vaultjet}
+type Secret struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              ResourceSpec   `json:"spec"`
-	Status            ResourceStatus `json:"status,omitempty"`
+	Spec              SecretSpec   `json:"spec"`
+	Status            SecretStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// ResourceList contains a list of Resources
-type ResourceList struct {
+// SecretList contains a list of Secrets
+type SecretList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []Resource `json:"items"`
+	Items           []Secret `json:"items"`
 }
 
 // Repository type metadata.
 var (
-	Resource_Kind             = "Resource"
-	Resource_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: Resource_Kind}.String()
-	Resource_KindAPIVersion   = Resource_Kind + "." + CRDGroupVersion.String()
-	Resource_GroupVersionKind = CRDGroupVersion.WithKind(Resource_Kind)
+	Secret_Kind             = "Secret"
+	Secret_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: Secret_Kind}.String()
+	Secret_KindAPIVersion   = Secret_Kind + "." + CRDGroupVersion.String()
+	Secret_GroupVersionKind = CRDGroupVersion.WithKind(Secret_Kind)
 )
 
 func init() {
-	SchemeBuilder.Register(&Resource{}, &ResourceList{})
+	SchemeBuilder.Register(&Secret{}, &SecretList{})
 }
