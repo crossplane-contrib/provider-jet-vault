@@ -50,7 +50,7 @@ GO111MODULE = on
 # ====================================================================================
 # Setup Images
 
-DOCKER_REGISTRY ?= docker.io/upbound
+REGISTRY_ORGS ?= docker.io/upbound
 IMAGES = provider-jet-vault provider-jet-vault-controller
 -include build/makelib/imagelight.mk
 
