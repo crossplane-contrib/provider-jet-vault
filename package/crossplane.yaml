@@ -4,4 +4,4 @@ metadata:
   name: provider-jet-vault
 spec:
   controller:
-    image: DOCKER_REGISTRY/provider-jet-vault-controller:VERSION
+    image: upbound/provider-jet-vault-controller:VERSION
