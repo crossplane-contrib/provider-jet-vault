@@ -1,4 +1,4 @@
-module github.com/crossplane-contrib/provider-jet-vault
+module github.com/upbound/provider-jet-vault
 
 go 1.17
 
