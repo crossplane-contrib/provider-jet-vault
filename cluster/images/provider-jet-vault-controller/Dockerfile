@@ -1,4 +1,4 @@
-FROM BASEIMAGE
+FROM alpine:3.13
 RUN apk --no-cache add ca-certificates bash
 
 ARG ARCH
