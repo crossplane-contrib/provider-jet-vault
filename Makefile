@@ -50,9 +50,9 @@ GO111MODULE = on
 # ====================================================================================
 # Setup Images
 
-DOCKER_REGISTRY ?= crossplane
+DOCKER_REGISTRY ?= docker.io/upbound
 IMAGES = provider-jet-vault provider-jet-vault-controller
--include build/makelib/image.mk
+-include build/makelib/imagelight.mk
 
 # ====================================================================================
 # Fallthrough
