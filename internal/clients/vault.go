@@ -36,15 +36,18 @@ const (
 	keyTokenName          = "token_name"
 	keyCaCertFile         = "ca_cert_file"
 	keyCaCertDir          = "ca_cert_dir"
-	keyAuthLogin          = "auth_login"
-	keyClientAuth         = "client_auth"
-	keySkipTlsVerify      = "skip_tls_verify"
+	keySkipTLSVerify      = "skip_tls_verify"
 	keySkipChildToken     = "skip_child_token"
-	keyMaxLeaseTtlSeconds = "max_lease_ttl_seconds"
+	keyMaxLeaseTTLSeconds = "max_lease_ttl_seconds"
 	keyMaxRetries         = "max_retries"
 	keyMaxRetriesCcc      = "max_retries_ccc"
 	keyNamespace          = "namespace"
-	keyHeaders            = "headers"
+
+	// TODO(@aaronme) These should only be added to the configuration if they
+	// are supplied
+	// keyAuthLogin          = "auth_login"
+	// keyClientAuth         = "client_auth"
+	// keyHeaders            = "headers"
 
 	// Vault credentials environment variable names
 	envVaultAddr          = "VAULT_ADDR"
@@ -52,9 +55,9 @@ const (
 	envTokenName          = "VAULT_TOKEN_NAME"
 	envCaCertFile         = "VAULT_CACERT"
 	envCaCertDir          = "VAULT_CAPATH"
-	envSkipTlsVerify      = "VAULT_SKIP_VERIFY"
+	envSkipTLSVerify      = "VAULT_SKIP_VERIFY"
 	envSkipChildToken     = "TERRAFORM_VAULT_SKIP_CHILD_TOKEN"
-	envMaxLeaseTtlSeconds = "TERRAFORM_VAULT_MAX_TTL"
+	envMaxLeaseTTLSeconds = "TERRAFORM_VAULT_MAX_TTL"
 	envMaxRetries         = "VAULT_MAX_RETRIES"
 	envMaxRetriesCcc      = "VAULT_MAX_RETRIES_CCC"
 	envNamespace          = "VAULT_NAMESPACE"
@@ -109,12 +112,21 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 		// set provider configuration
 		ps.Configuration = map[string]interface{}{
 			"address": vaultCreds[keyVaultAddr],
-			"token":   vaultCreds[keyToken],
 		}
 		// set environment variables for sensitive provider configuration
 		ps.Env = []string{
 			fmt.Sprintf(fmtEnvVar, envVaultAddr, vaultCreds[keyVaultAddr]),
 			fmt.Sprintf(fmtEnvVar, envToken, vaultCreds[keyToken]),
+			fmt.Sprintf(fmtEnvVar, envTokenName, vaultCreds[keyTokenName]),
+			fmt.Sprintf(fmtEnvVar, envToken, vaultCreds[keyToken]),
+			fmt.Sprintf(fmtEnvVar, envCaCertFile, vaultCreds[keyCaCertFile]),
+			fmt.Sprintf(fmtEnvVar, envCaCertDir, vaultCreds[keyCaCertDir]),
+			fmt.Sprintf(fmtEnvVar, envSkipTLSVerify, vaultCreds[keySkipTLSVerify]),
+			fmt.Sprintf(fmtEnvVar, envSkipChildToken, vaultCreds[keySkipChildToken]),
+			fmt.Sprintf(fmtEnvVar, envMaxLeaseTTLSeconds, vaultCreds[keyMaxLeaseTTLSeconds]),
+			fmt.Sprintf(fmtEnvVar, envMaxRetries, vaultCreds[keyMaxRetries]),
+			fmt.Sprintf(fmtEnvVar, envMaxRetriesCcc, vaultCreds[keyMaxRetriesCcc]),
+			fmt.Sprintf(fmtEnvVar, envNamespace, vaultCreds[keyNamespace]),
 		}
 		return ps, nil
 	}
