@@ -21,8 +21,8 @@ import (
 
 	"github.com/crossplane/terrajet/pkg/controller"
 
-	secret "github.com/upbound/provider-jet-vault/internal/controller/generic/secret"
-	providerconfig "github.com/upbound/provider-jet-vault/internal/controller/providerconfig"
+	secret "github.com/crossplane-contrib/provider-jet-vault/internal/controller/generic/secret"
+	providerconfig "github.com/crossplane-contrib/provider-jet-vault/internal/controller/providerconfig"
 )
 
 // Setup creates all controllers with the supplied logger and adds them to

@@ -33,10 +33,10 @@ import (
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	"github.com/upbound/provider-jet-vault/apis"
-	"github.com/upbound/provider-jet-vault/config"
-	"github.com/upbound/provider-jet-vault/internal/clients"
-	"github.com/upbound/provider-jet-vault/internal/controller"
+	"github.com/crossplane-contrib/provider-jet-vault/apis"
+	"github.com/crossplane-contrib/provider-jet-vault/config"
+	"github.com/crossplane-contrib/provider-jet-vault/internal/clients"
+	"github.com/crossplane-contrib/provider-jet-vault/internal/controller"
 )
 
 func main() {
