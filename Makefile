@@ -2,7 +2,7 @@
 # Setup Project
 
 PROJECT_NAME := provider-jet-vault
-PROJECT_REPO := github.com/upbound/$(PROJECT_NAME)
+PROJECT_REPO := github.com/crossplane-contrib/$(PROJECT_NAME)
 
 export TERRAFORM_VERSION := 1.1.6
 
@@ -50,7 +50,7 @@ GO111MODULE = on
 # ====================================================================================
 # Setup Images
 
-REGISTRY_ORGS ?= docker.io/upbound
+REGISTRY_ORGS ?= docker.io/crossplane
 IMAGES = provider-jet-vault provider-jet-vault-controller
 -include build/makelib/imagelight.mk
 

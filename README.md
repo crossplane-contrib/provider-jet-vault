@@ -8,12 +8,12 @@ Vault API.
 ## Getting Started
 
 Install the provider by using the following command after changing the image tag
-to the [latest release](https://github.com/upbound/provider-jet-vault/releases):
+to the [latest release](https://github.com/crossplane-contrib/provider-jet-vault/releases):
 ```
 kubectl crossplane install provider crossplane/provider-jet-vault:v0.1.0
 ```
 
-You can see the API reference [here](https://doc.crds.dev/github.com/upbound/provider-jet-vault).
+You can see the API reference [here](https://doc.crds.dev/github.com/crossplane-contrib/provider-jet-vault).
 
 ## Developing
 
@@ -55,7 +55,7 @@ make build
 ## Report a Bug
 
 For filing bugs, suggesting improvements, or requesting new features, please
-open an [issue](https://github.com/upbound/provider-jet-vault/issues).
+open an [issue](https://github.com/crossplane-contrib/provider-jet-vault/issues).
 
 ## Contact
 
