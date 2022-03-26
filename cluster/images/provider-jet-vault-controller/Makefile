@@ -24,11 +24,10 @@ img.publish:
 img.build.shared:
 	@cp Dockerfile $(IMAGE_TEMP_DIR) || $(FAIL)
 	@cp terraformrc.hcl $(IMAGE_TEMP_DIR) || $(FAIL)
-	@cp $(OUTPUT_DIR)/bin/$(OS)_$(ARCH)/provider $(IMAGE_TEMP_DIR) || $(FAIL)
+	@cp -r $(OUTPUT_DIR)/bin/ $(IMAGE_TEMP_DIR)/bin || $(FAIL)
 	@cd $(IMAGE_TEMP_DIR) && $(SED_CMD) 's|BASEIMAGE|$(OSBASEIMAGE)|g' Dockerfile || $(FAIL)
 	@docker buildx build $(BUILD_ARGS) \
 		--platform $(IMAGE_PLATFORMS) \
-		--build-arg ARCH=$(ARCH) \
 		--build-arg TINI_VERSION=$(TINI_VERSION) \
 		--build-arg TERRAFORM_VERSION=$(TERRAFORM_VERSION) \
 		--build-arg TERRAFORM_PROVIDER_SOURCE=$(TERRAFORM_PROVIDER_SOURCE) \
