@@ -1,0 +1,19 @@
+---
+apiVersion: pkg.crossplane.io/v1alpha1
+kind: ControllerConfig
+metadata:
+  name: jet-vault-config
+  labels:
+    app: crossplane-provider-jet-vault
+spec:
+  image: crossplane/provider-jet-vault-controller:v0.1.0
+  args: ["-d"]
+---
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: crossplane-provider-jet-vault
+spec:
+  package: crossplane/provider-jet-vault:v0.1.0
+  controllerConfigRef:
+    name: jet-vault-config

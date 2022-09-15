@@ -118,6 +118,11 @@ func (in *SecretParameters) DeepCopyInto(out *SecretParameters) {
 		*out = new(bool)
 		**out = **in
 	}
+	if in.Namespace != nil {
+		in, out := &in.Namespace, &out.Namespace
+		*out = new(string)
+		**out = **in
+	}
 	if in.Path != nil {
 		in, out := &in.Path, &out.Path
 		*out = new(string)
