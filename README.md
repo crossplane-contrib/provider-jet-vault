@@ -2,7 +2,7 @@
 
 `provider-jet-vault` is a [Crossplane](https://crossplane.io/) provider that
 is built using [Terrajet](https://github.com/crossplane/terrajet) code
-generation tools and exposes XRM-conformant managed resources for the 
+generation tools and exposes XRM-conformant managed resources for the
 Vault API.
 
 ## Getting Started
@@ -13,13 +13,20 @@ to the [latest release](https://github.com/crossplane-contrib/provider-jet-vault
 kubectl crossplane install provider crossplane/provider-jet-vault:v0.1.0
 ```
 
+Alternatively, you can use declarative installation:
+```
+kubectl apply -f examples/install.yaml
+```
+
+Notice that in this example Provider resource is referencing ControllerConfig with debug enabled.
+
 You can see the API reference [here](https://doc.crds.dev/github.com/crossplane-contrib/provider-jet-vault).
 
 ## Developing
 
 Run code-generation pipeline:
 ```console
-go run cmd/generator/main.go
+go run cmd/generator/main.go "$PWD"
 ```
 
 Run against a Kubernetes cluster:
@@ -32,18 +39,6 @@ Build, push, and install:
 
 ```console
 make all
-```
-
-Build image:
-
-```console
-make image
-```
-
-Push image:
-
-```console
-make push
 ```
 
 Build binary:

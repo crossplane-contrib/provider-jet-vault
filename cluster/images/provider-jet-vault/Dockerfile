@@ -1,3 +1,3 @@
-FROM scratch
+FROM BASEIMAGE
 
 COPY package.yaml .

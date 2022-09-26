@@ -7,9 +7,10 @@ PROJECT_REPO := github.com/crossplane-contrib/$(PROJECT_NAME)
 export TERRAFORM_VERSION := 1.1.6
 
 export TERRAFORM_PROVIDER_SOURCE := hashicorp/vault
-export TERRAFORM_PROVIDER_VERSION := 3.3.1
+export TERRAFORM_PROVIDER_VERSION := 3.8.2
 export TERRAFORM_PROVIDER_DOWNLOAD_NAME := terraform-provider-vault
-export TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX := https://releases.hashicorp.com/terraform-provider-vault/3.3.1
+export TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX := https://releases.hashicorp.com/terraform-provider-vault/3.8.2
+export TERRAFORM_NATIVE_PROVIDER_BINARY := terraform-provider-vault_v3.8.2
 
 PLATFORMS ?= linux_amd64 linux_arm64
 
@@ -50,9 +51,9 @@ GO111MODULE = on
 # ====================================================================================
 # Setup Images
 
-REGISTRY_ORGS ?= docker.io/crossplane
+DOCKER_REGISTRY ?= crossplane
 IMAGES = provider-jet-vault provider-jet-vault-controller
--include build/makelib/imagelight.mk
+-include build/makelib/image.mk
 
 # ====================================================================================
 # Fallthrough

@@ -43,6 +43,10 @@ type SecretParameters struct {
 	// +kubebuilder:validation:Optional
 	DisableRead *bool `json:"disableRead,omitempty" tf:"disable_read,omitempty"`
 
+	// Target namespace. (requires Enterprise)
+	// +kubebuilder:validation:Optional
+	Namespace *string `json:"namespace,omitempty" tf:"namespace,omitempty"`
+
 	// Full path where the generic secret will be written.
 	// +kubebuilder:validation:Required
 	Path *string `json:"path" tf:"path,omitempty"`
