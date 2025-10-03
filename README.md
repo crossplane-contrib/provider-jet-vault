@@ -1,8 +1,17 @@
-# Terrajet Vault Provider
+# Terrajet Vault Provider (archived)
+
+> [!WARNING]
+> This project has been archived as per [Crossplane's project
+> governance](https://github.com/crossplane/crossplane/blob/main/GOVERNANCE.md#archival-policy)
+> for community extension projects and is no longer actively maintained.
+>
+> It is recommended to use the
+> [provider-vault](https://github.com/upbound/provider-vault)
+> project instead.
 
 `provider-jet-vault` is a [Crossplane](https://crossplane.io/) provider that
 is built using [Terrajet](https://github.com/crossplane/terrajet) code
-generation tools and exposes XRM-conformant managed resources for the 
+generation tools and exposes XRM-conformant managed resources for the
 Vault API.
 
 ## Getting Started
